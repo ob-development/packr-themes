@@ -19,8 +19,8 @@
 function customPackrAccountBackEvent() {
 }
 /*
- * customPackrAccountReceivedEvent()
- *   - called when an account is recieved via socket
+ * customPackrAccountReceivedEvent(obj)
+ *   - called when an account is received via socket
  *   - parameters:
  *      ~ obj.accountId => unique account id
  *      ~ obj.email     => email address
@@ -31,13 +31,14 @@ function customPackrAccountReceivedEvent(obj) {
   //colorcode can be used to mark the account, please use: rgba(' + obj.cc + ',0.7)
 }
 /*
- * customPackrAccountDisplayEvent()
+ * customPackrAccountDisplayEvent(id)
  *   - called when an account is clicked via attribute: onclick="accountClick(' + obj.accountId +')"
  *   - parameters:
  *      ~ id => account id
  */
 function customPackrAccountDisplayEvent(id) {
   //get account detail: var account = accountHandler.get(id);
+  //TODO
   $('#account-sidebar-inbox').html('<i class="fa fa-inbox fa-lg fa-fw text-muted"></i> '+account.getMail());
   $('#account-sidebar-inbox').attr("onclick", "showFolder('INBOX',"+id+", false);");
   var folders = account.getFolders();
@@ -46,56 +47,47 @@ function customPackrAccountDisplayEvent(id) {
     displayFolder(folder.getName(), id, folder.getMessageCount());
   }
 }
+/*
+ * customPackrEmailDisplayEvent(obj)
+ *   - called when an email should be displayed in the email iframe
+ *   - parameters:
+ *      ~ obj.id        => ??
+ *      ~ obj.sbj       => email subject
+ *      ~ obj.content   => email content
+ *      ~ obj.senddate  => email send timestamp
+ *      ~ obj.recdate   => email receive timestamp
+ *      ~ obj.sender    => email sender
+ *      ~ obj.rplyto    => email reply-to address
+ *      ~ obj.to        => email reciever
+ *      ~ obj.cc        => ??
+ *      ~ obj.bcc       => ??
+ *      ~ obj.accountID => id of the email account
+ *      ~ obj.folder    => full folder path of email
+ */
 function customPackrEmailDisplayEvent(obj) {
-  // called when an email should be displayed in the email iFrame
-  
-  // obj contains all information about the email
-  
-  /*
-   * #obj.id
-   * #obj.sbj
-   * #obj.content
-   * #obj.senddate
-   * #obj.recdate
-   * #obj.sender - 
-   * #obj.rplyto - email an welche die antwort soll
-   * #obj.to - empfänger denk ich
-   * #obj.cc - 
-   * #obj.bcc - 
-   * #obj.accountID - id vom account
-   * #obj.folder - voller ordner name wo die email ist
-   */
-  
-  $('#mail-frame-title').html(obj.sbj);
-  $('#mail-frame-time').html(obj.recdate);
-  $('#mail-frame-from').html("Von: "+obj.sender);
-  $('#mail-frame-to').html("An: "+obj.to);
-  frame = document.getElementById('mail-content')
-  frame.src = "javascript:;";
-  win = frame.contentWindow;
-  win.document.open();
-  win.document.write(obj.content);
-  win.document.close();
-  document.getElementById('mail-frame').scrollTop = 0;
+  //populate the header fields and iframe
 }
+/*
+ * customPackrEmailForListReceivedEvent(obj)
+ *   - called when ??
+ *   - parameters:
+ *      ~ obj.colorCode => color code of account
+ *      ~ obj.sbj       => email subject
+ *      ~ obj.senddate  => email send timestamp
+ *      ~ obj.recdate   => email receive timestamp
+ *      ~ obj.sender    => email sender
+ *      ~ obj.rplyto    => email reply-to address
+ *      ~ obj.cc        => ??
+ *      ~ obj.bcc       => ??
+ *      ~ obj.folder    => full folder path of email
+ *      ~ obj.seen      => ??
+ *      ~ obj.ansered   => ??
+ *      ~ obj.deleted   => ??
+ *      ~ obj.draft     => ??
+ *      ~ obj.flagged   => ??
+ */
 function customPackrEmailForListReceivedEvent(obj) {
-  // called when some kind of crap...
-  
-  /* #obj.seen
-   * #obj.answered
-   * #obj.deleted
-   * #obj.flagged
-   * #obj.draft
-   * #obj.colorCode
-   * #obj.cc
-   * #obj.bcc
-   * #obj.rplyto
-   * #obj.sender
-   * #obj.senddate
-   * #obj.recdate
-   * #obj.sbj
-   * #obj.folder
-   */
+  //TODO
   
   // need to check here, if the email is from the displayed email list
   // if so --> update the view | else | nothing
@@ -116,44 +108,80 @@ function customPackrEmailForListReceivedEvent(obj) {
   $("#message-frame").prepend(newMsg);
    
 }
+/*
+ * customPackrEmailSendEvent()
+ *   - called when email is send
+ */
 function customPackrEmailSendEvent() {
-  // called when an email is send
+  //hide email dialog, clear input fields...
 }
+/*
+ * customPackrMailSendedEvent(obj)
+ *   - called when an email was sent
+ *   - parameters:
+ *      ~ obj => boolean, true if email was sent successfully
+ */
 function customPackrMailSendedEvent(obj) {
-  // Wenn jmd. eine E-Mail verschickt, wird diese Funktion als antwort aufgerufen, ob die E-Mail erfolgreich verschickt wurde
-  // obj = true|false (boolean)
+  //inform if email was sent successfully
 }
+/*
+ * customPackrFolderLoadEvent()
+ *   - called when ??
+ */
 function customPackrFolderLoadEvent() {
-  $("#message-frame").html("");
 }
+/*
+ * customPackrLoadedEvent()
+ *   - called when onLoad function in packr.js is called
+ */
 function customPackrLoadedEvent() {
-  // called when onLoad function in packr.js is called
 }
+/*
+ * customPackrStartEvent()
+ *   - called when packr.js tries to authenticate a user
+ */
 function customPackrStartEvent() {
-  // called when packr.js tries to authenticate a user
 }
+/*
+ * customPackrStartSocketEvent()
+ *   - called when packr.js starts the socket connection
+ */
 function customPackrStartSocketEvent() {
-  // called when packr.js starts an socket connection
 }
+/*
+ * customPackrSocketConnectedEvent()
+ *   - called when packr.js connected to a packr server
+ */
 function customPackrSocketConnectedEvent() {
-  // called when packr.js connected to a packr server
 }
+/*
+ * customPackrSocketClosedEvent()
+ *   - called when packr.js closed the connection to a packr server
+ */
 function customPackrSocketClosedEvent() {
-  // called when packr.js closed the connection to a packr server
 }
+/*
+ * customPackrSocketErrorEvent()
+ *   - called when packr.js got a socket error
+ */
 function customPackrSocketErrorEvent() {
-  // called when packr.js got a socket error
 }
+/*
+ * customPackrSocketNotSupportetEvent()
+ *   - called when 'socket' is not supported by the client
+ */
 function customPackrSocketNotSupportedEvent() {
-  // called when 'socket' is not supported by the client
 }
+/*
+ * customPackrUserValidEvent()
+ *   - called when packr.js successfully validates the user
+ */
 function customPackrUserValidEvent() {
-  // called when packr.js recived that user is validated
-  
-  // here it should hide the login/other modal
-  // user is now logged in
+  // here it should hide the login, user is now logged in
 }
 
+
+//TODO
 /*
  * Custom scripts
  */
